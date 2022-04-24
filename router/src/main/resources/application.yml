@@ -1,0 +1,48 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: router-service
+  zipkin:
+    base-url: http://localhost:9411/
+  cloud:
+    gateway:
+      routes:
+        - id: sampah-route
+          uri: ${SAMPAH_URL:http://localhost:8001}
+          predicates:
+            - Path=/sampahs/**
+          filters:
+            - AddRequestHeader=X-Client,web
+            - AddResponseHeader=X-Type,inorganic
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+            - name: CircuitBreaker
+              args:
+                name: sampahService
+                fallbackUri: forward:/sampahs-fallback
+        - id: member-route
+          uri: http://localhost:8002
+          predicates:
+            - Path=/members/**
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      sampahService:
+        slidingWindowSize: 10                     #unit request
+        permittedNumberOfCallsInHalfOpenState: 5  #unit request
+        failureRateThreshold: 50                  #percent
+        waitDurationInOpenState: 10000            #10 seconds
+        registerHealthIndicator: true
+  timelimiter:
+    instances:
+      sampahServie:
+        timeoutDuration: 2s
+

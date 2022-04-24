@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/member/member.iml" filepath="$PROJECT_DIR$/member/member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/router/router.iml" filepath="$PROJECT_DIR$/router/router.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sampah/sampah.iml" filepath="$PROJECT_DIR$/sampah/sampah.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/scg-project.iml" filepath="$PROJECT_DIR$/.idea/scg-project.iml" />
+    </modules>
+  </component>
+</project>
